@@ -52,3 +52,7 @@
 ```
 /load
 ```
+
+## License
+
+MIT © [cagataycali](https://cagatay.me)
