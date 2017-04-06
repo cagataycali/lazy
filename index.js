@@ -2,10 +2,9 @@ var BrainJSClassifier = require('natural-brain')
 var classifier = new BrainJSClassifier();
 
 var TelegramBot = require('node-telegram-bot-api');
-const appUrl = `https://${process.env.APP_NAME}.herokuapp.com:443`;
-const options = { webHook: { port: process.env.PORT } };
-const bot = new TelegramBot(process.env.TELEGRAM_TOKEN, options);
-
+var appUrl = `https://${process.env.APP_NAME}.herokuapp.com:443`;
+var options = { webHook: { port: process.env.PORT } };
+var bot = new TelegramBot(process.env.TELEGRAM_TOKEN, options);
 bot.setWebHook(`${appUrl}/bot${process.env.TELEGRAM_TOKEN}`);
 
 var  _ = require('underscore')
@@ -47,6 +46,16 @@ bot.on('message', (msg) => {
       bot.sendMessage(msg.chat.id, 'Hmm.. 😕', { disable_notification:true, reply_to_message_id:msg.message_id });
     }, empty);
 
+    // Not tested yet..
+    matcher('/forgot', /\/forgot (.+) - (.+)/, msg, function(match) {
+      classifier.removeDocument(match[1], match[2]);
+      classifier.retrain();
+      classifier.remove({ name:match[2] }, {}, function (err, numRemoved) {
+        console.log(numRemoved, 'row removed.');
+      });
+      bot.sendMessage(msg.chat.id, 'I forgot already.. 😕', { disable_notification:true, reply_to_message_id:msg.message_id });
+    }, empty);
+
     matcher('/categories', /\/categories/, msg, function(match) {
       categories.find({}, function (err, docs) {
           bot.sendMessage(msg.chat.id, `${docs.map((item) => {return item.name}).join(',')}`, { disable_notification:true, reply_to_message_id:msg.message_id });
@@ -63,13 +72,13 @@ bot.on('message', (msg) => {
         });
     }, empty);
 
-    matcher('/load', /\/load/, msg, function(match) {
-      BrainJSClassifier.load('./data.json', null,
-        function(err, newClassifier) {
-          classifier = newClassifier;
-          classifier.train();
-        });
-      }, empty);
+    // matcher('/load', /\/load/, msg, function(match) {
+    //   BrainJSClassifier.load('./data.json', null,
+    //     function(err, newClassifier) {
+    //       classifier = newClassifier;
+    //       // classifier.train();
+    //     });
+    //   }, empty);
 
     matcher('/responses', /\/responses (.+)/, msg, function(match) {
       console.log(match[1]);
@@ -89,20 +98,9 @@ bot.on('message', (msg) => {
   } else {
     try {
       var category = classifier.classify(msg.text);
-
-      var classified = classifier.getClassifications(msg.text);
-      classified = _.sortBy(classified, 'value')
-      classified.reverse();
-      console.log(classified[0].value);
-      if (classified[0].value > 0.7) {
-        categories.findOne({name: category}, function (err, docs) {
-            bot.sendMessage(msg.chat.id, `${random(docs.responses)}`, { disable_notification:true, reply_to_message_id:msg.message_id });
-        });
-      } else {
-        nonclassified.insert({word: msg.text}, function(err, doc) {
-          if (!err) console.log('Inserted', doc.name, 'with ID', doc._id)
-        });
-      }
+      categories.findOne({name: category}, function (err, docs) {
+          bot.sendMessage(msg.chat.id, `${random(docs.responses)}`, { disable_notification:true, reply_to_message_id:msg.message_id });
+      });
     } catch (e) {
       console.log(msg.text);
       nonclassified.insert({word: msg.text}, function(err, doc) {

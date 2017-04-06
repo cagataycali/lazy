@@ -1,1 +1,4 @@
 node_modules
+categories.db
+nonclassified.db
+data.json
