@@ -44,7 +44,7 @@ bot.on('message', (msg) => {
       categories.insert({name:match[2], responses: []}, function(err, doc) {
         if (!err) console.log('Inserted', doc.name, 'with ID', doc._id)
       });
-      bot.sendMessage(msg.chat.id, 'Sanırım okul hiç bitmeyecek.. 😕', { disable_notification:true, reply_to_message_id:msg.message_id });
+      bot.sendMessage(msg.chat.id, 'Hmm.. 😕', { disable_notification:true, reply_to_message_id:msg.message_id });
     }, empty);
 
     // Kategoriler
@@ -87,7 +87,7 @@ bot.on('message', (msg) => {
     // Kategoriye yanıt ekleme
     matcher('/add', /\/add (.+) - (.+)/, msg, function (match) {
       categories.update({ name: match[1] }, { $push: { responses: match[2] } }, {}, function (err) {
-        bot.sendMessage(msg.chat.id, 'Bana bir harf öğretenin kırk yıl kölesi olurum.. 😕', { disable_notification:true, reply_to_message_id:msg.message_id });
+        bot.sendMessage(msg.chat.id, 'I think I can! .. 😕', { disable_notification:true, reply_to_message_id:msg.message_id });
       });
     }, empty);
   } else if (slient) {
