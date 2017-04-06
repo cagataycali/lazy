@@ -2,7 +2,7 @@
   "name": "Lazy",
   "description": "Lazy, ai telegram bot.",
   "repository": "https://github.com/cagataycali/lazy",
-  "logo": "https://raw.githubusercontent.com/cagataycali/l00g.in/master/logo.png",
+  "logo": "https://cagatay.js.org/lazy.png",
   "keywords": ["lazy", "ai", "nlp"],
   "website": "https://cagatay.me",
   "env": {
