@@ -37,7 +37,7 @@ function matcher(matchs, pattern, message, callback, error) {
 
 bot.on('message', (msg) => {
   if (msg.entities && msg.entities[0].type === "bot_command") {
-    // Öğren => içerik - kategori deseni.
+
     matcher('/learn', /\/learn (.+) - (.+)/, msg, function(match) {
       classifier.addDocument(match[1], match[2]);
       classifier.train();
@@ -47,26 +47,22 @@ bot.on('message', (msg) => {
       bot.sendMessage(msg.chat.id, 'Hmm.. 😕', { disable_notification:true, reply_to_message_id:msg.message_id });
     }, empty);
 
-    // Kategoriler
     matcher('/categories', /\/categories/, msg, function(match) {
       categories.find({}, function (err, docs) {
           bot.sendMessage(msg.chat.id, `${docs.map((item) => {return item.name}).join(',')}`, { disable_notification:true, reply_to_message_id:msg.message_id });
       });
     }, empty);
 
-    // Sus
     matcher('/quiet', /\/quiet/, msg, function(match) {
       slient === true ? false : true;
     }, empty);
 
-    // Save
     matcher('/save', /\/save/, msg, function(match) {
         classifier.save('./data.json', function() {
           console.log('Saved..');
         });
     }, empty);
 
-    // Load
     matcher('/load', /\/load/, msg, function(match) {
       BrainJSClassifier.load('./data.json', null,
         function(err, newClassifier) {
@@ -75,7 +71,6 @@ bot.on('message', (msg) => {
         });
       }, empty);
 
-    // Yanitlar
     matcher('/responses', /\/responses (.+)/, msg, function(match) {
       console.log(match[1]);
       categories.findOne({name: match[1]}, function (err, docs) {
@@ -84,7 +79,6 @@ bot.on('message', (msg) => {
       });
     }, empty);
 
-    // Kategoriye yanıt ekleme
     matcher('/add', /\/add (.+) - (.+)/, msg, function (match) {
       categories.update({ name: match[1] }, { $push: { responses: match[2] } }, {}, function (err) {
         bot.sendMessage(msg.chat.id, 'I think I can! .. 😕', { disable_notification:true, reply_to_message_id:msg.message_id });
@@ -116,5 +110,4 @@ bot.on('message', (msg) => {
       });
     }
   }
-
 });
