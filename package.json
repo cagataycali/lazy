@@ -1,0 +1,15 @@
+{
+  "name": "Lazy",
+  "version": "1.0.0",
+  "description": "Lazy, ai telegram bot.",
+  "main": "index.js",
+  "repository": "git@github.com:cagataycali/lazy.git",
+  "author": "cagataycali <cagataycali@icloud.com>",
+  "license": "MIT",
+  "dependencies": {
+    "natural-brain": "^0.2.3",
+    "nedb": "^1.8.0",
+    "node-telegram-bot-api": "^0.27.0",
+    "underscore": "^1.8.3"
+  }
+}

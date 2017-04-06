@@ -1,0 +1,12 @@
+{
+  "name": "Lazy",
+  "description": "Lazy, ai telegram bot.",
+  "repository": "https://github.com/cagataycali/lazy",
+  "logo": "https://raw.githubusercontent.com/cagataycali/l00g.in/master/logo.png",
+  "keywords": ["lazy", "ai", "nlp"],
+  "website": "https://cagataycali.me",
+  "env": {
+    "TELEGRAM_TOKEN": null,
+    "APP_NAME": null
+  }
+}
