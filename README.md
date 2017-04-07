@@ -8,7 +8,7 @@
 
 [![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/cagataycali/lazy)
 
-# Programmatic Usage
+## Programmatic Usage
 
 ```bash
 # Or npm install --save lazy.ai
