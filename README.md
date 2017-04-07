@@ -75,6 +75,7 @@ start();
 /load
 ```
 </details>
+
 ## License
 
 MIT © [cagataycali](https://cagatay.me)
