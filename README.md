@@ -2,7 +2,7 @@
 
 ![](https://cagatay.js.org/lazy.png)
 
-## AI chat bot.
+## AI chat bot service.
 
 <p>Lazy allows you create awesome chat bot with no longer know ai!</p>
 <p>Just teach lazy 4 your phase case!</p>
