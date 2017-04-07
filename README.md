@@ -35,6 +35,8 @@ async function start() {
 start();
 ```
 
+[![See in action](https://asciinema.org/a/5qp2xiy0s08a768mtudqj4anh.png)](https://asciinema.org/a/5qp2xiy0s08a768mtudqj4anh)
+
 ## Telegram Bot Usage
 
 <details>
