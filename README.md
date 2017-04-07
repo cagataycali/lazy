@@ -12,7 +12,11 @@ You can try in telegram already: Lets chat with @LazyAIBot, my Turkish friends a
 If you want host on your own, go ahead do this!
 [Create telegram bot.](https://core.telegram.org/bots#6-botfather)
 
-[![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/cagataycali/lazy)
+Telegram Bot Deploy:
+[![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/cagataycali/lazy-telegram)
+
+Express HTTP Endpoint Deploy:
+[![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/cagataycali/lazy-express)
 
 ## Programmatic Usage
 
@@ -89,6 +93,62 @@ start();
 ```
 /load
 ```
+</details>
+
+## Express HTTP Endpoint Usage
+
+<details>
+
+### BASE URL: https://YOURAPPNAME.herokuapp.com/</yourappname>
+
+### Train sended data (phrase, category)
+
+```
+POST /learn
+```
+
+### Forget trained data (phrase, category)
+
+```
+POST /forget
+```
+
+### Add response in category (category, response)
+
+```
+POST /response
+```
+
+### Do query in trained data and response random response text.
+
+```
+POST /query
+```
+
+### Get all trained categories (-)
+
+```
+GET /categories
+```
+
+### Save trained data.
+
+```
+GET /save
+```
+
+### Load already trained and saved data.
+
+```
+GET /load
+```
+
+### Get responses order by category.
+
+```
+GET /responses/:category
+```
+
 </details>
 
 ## License
