@@ -12,7 +12,7 @@
 
 ```bash
 # Or npm install --save lazy.ai
-yarn add lazy.ai
+$> yarn add lazy.ai
 ```
 
 ```javascript
