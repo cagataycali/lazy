@@ -43,7 +43,7 @@ class Lazy {
   quiet() {
     let {slient, categories} = this;
     return new Promise(function(resolve, reject) {
-      slient = slient === true ? false : true;
+      slient = !slient;
       resolve(slient);
     });
   }
