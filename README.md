@@ -8,8 +8,30 @@
 
 [![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/cagataycali/lazy)
 
-## Usage
+# Programmatic Usage
+```javascript
+var Lazy = require('lazy.ai');
 
+async function start() {
+  var lazy = new Lazy();
+  // Learn ..
+  console.log(await lazy.learn({phrase: 'hello', category: 'greetings'}));
+  console.log(await lazy.learn({phrase: 'hi', category: 'greetings'}));
+  console.log(await lazy.learn({phrase: 'Hello there!', category: 'greetings'}));
+  // Result ..
+  console.log(await lazy.query({phrase: "hello dude!"}));
+  // Helpers..
+  console.log(await lazy.addResponse({category: 'greetings', response: 'Hi there!'}));
+  console.log(await lazy.getResponses({category: 'greetings'}));
+  console.log(await lazy.getCategories());
+}
+// Dont forget start your function :)
+start();
+```
+
+## Telegram Bot Usage
+
+<details>
 ### Learn something..
 
 ```
@@ -52,7 +74,7 @@
 ```
 /load
 ```
-
+</details>
 ## License
 
 MIT © [cagataycali](https://cagatay.me)
