@@ -9,6 +9,12 @@
 [![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/cagataycali/lazy)
 
 # Programmatic Usage
+
+```bash
+# Or npm install --save lazy.ai
+yarn add lazy.ai
+```
+
 ```javascript
 var Lazy = require('lazy.ai');
 
