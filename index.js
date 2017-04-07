@@ -16,6 +16,7 @@ var nonclassified = new Datastore({ filename: 'nonclassified.db', autoload: true
 categories.ensureIndex({ fieldName: 'name', unique: true }, function (err) {
   if (err) console.log(err);
 });
+
 nonclassified.ensureIndex({ fieldName: 'word', unique: true }, function (err) {
   if (err) console.log(err);
 });
@@ -34,19 +35,50 @@ function matcher(matchs, pattern, message, callback, error) {
   }
 }
 
+function check(text, callback) {
+    var classified = classifier.getClassifications(text);
+    classified = _.sortBy(classified, 'value')
+    classified.reverse();
+    var value = classified[0].value;
+    if (value > 0.8) {
+      callback(1);
+    } else if (value > 0.3 && value < 0.8) {
+      callback(0.5);
+    } else {
+      callback(0);
+    }
+  }
+
 bot.on('message', (msg) => {
+
   if (msg.entities && msg.entities[0].type === "bot_command") {
 
     matcher('/learn', /\/learn (.+) - (.+)/, msg, function(match) {
-      classifier.addDocument(match[1], match[2]);
-      classifier.train();
-      categories.insert({name:match[2], responses: []}, function(err, doc) {
-        if (!err) console.log('Inserted', doc.name, 'with ID', doc._id)
-      });
-      bot.sendMessage(msg.chat.id, 'Hmm.. 😕', { disable_notification:true, reply_to_message_id:msg.message_id });
+      try {
+        classifier.addDocument(match[1], match[2]);
+        classifier.retrain();
+        categories.insert({name:match[2], responses: []}, function(err, doc) {
+          if (!err) console.log('Inserted', doc.name, 'with ID', doc._id)
+        });
+        bot.sendMessage(msg.chat.id, 'Hmm.. 😕', { disable_notification:true, reply_to_message_id:msg.message_id });
+      } catch (e) {
+        bot.sendMessage(msg.chat.id, 'I forgot already.. 😕', { disable_notification:true, reply_to_message_id:msg.message_id });
+      }
     }, empty);
 
-    // Not tested yet..
+    matcher('/load', /\/load/, msg, function(match) {
+      BrainJSClassifier.load('./data.json', null,
+        function(err, newClassifier) {
+          classifier = newClassifier;
+          classifier.train();
+        });
+      }, empty);
+
+    matcher('/save', /\/save/, msg, function(match) {
+        classifier.save('./data.json', function() {
+          console.log('Saved..');
+        });
+    }, empty);
     matcher('/forgot', /\/forgot (.+) - (.+)/, msg, function(match) {
       classifier.removeDocument(match[1], match[2]);
       classifier.retrain();
@@ -63,46 +95,53 @@ bot.on('message', (msg) => {
     }, empty);
 
     matcher('/quiet', /\/quiet/, msg, function(match) {
-      slient === true ? false : true;
+      slient = slient === true ? false : true;
     }, empty);
-
-    matcher('/save', /\/save/, msg, function(match) {
-        classifier.save('./data.json', function() {
-          console.log('Saved..');
-        });
-    }, empty);
-
-    // matcher('/load', /\/load/, msg, function(match) {
-    //   BrainJSClassifier.load('./data.json', null,
-    //     function(err, newClassifier) {
-    //       classifier = newClassifier;
-    //       // classifier.train();
-    //     });
-    //   }, empty);
 
     matcher('/responses', /\/responses (.+)/, msg, function(match) {
-      console.log(match[1]);
-      categories.findOne({name: match[1]}, function (err, docs) {
-        console.log(docs.responses);
-        bot.sendMessage(msg.chat.id, `${docs.responses.join(', ')}`, { disable_notification:true, reply_to_message_id:msg.message_id });
-      });
+      try {
+        categories.findOne({name: match[1]}, function (err, docs) {
+          console.log(docs.responses);
+          bot.sendMessage(msg.chat.id, `${docs.responses.join(', ')}`, { disable_notification:true, reply_to_message_id:msg.message_id });
+        });
+      } catch (e) {
+        bot.sendMessage(msg.chat.id, `Pwiz check usage :(`, { disable_notification:true, reply_to_message_id:msg.message_id });
+      }
+
     }, empty);
 
     matcher('/add', /\/add (.+) - (.+)/, msg, function (match) {
-      categories.update({ name: match[1] }, { $push: { responses: match[2] } }, {}, function (err) {
-        bot.sendMessage(msg.chat.id, 'I think I can! .. 😕', { disable_notification:true, reply_to_message_id:msg.message_id });
-      });
+      try {
+        categories.update({ name: match[1] }, { $push: { responses: match[2] } }, {}, function (err) {
+          bot.sendMessage(msg.chat.id, 'I think I can! .. 😕', { disable_notification:true, reply_to_message_id:msg.message_id });
+        });
+      } catch (e) {
+        bot.sendMessage(msg.chat.id, `I can't understand well, anybody can explain .. 😕`, { disable_notification:true, reply_to_message_id:msg.message_id });
+      }
     }, empty);
-  } else if (slient) {
-    console.log(msg.text);
+
   } else {
     try {
       var category = classifier.classify(msg.text);
-      categories.findOne({name: category}, function (err, docs) {
-          bot.sendMessage(msg.chat.id, `${random(docs.responses)}`, { disable_notification:true, reply_to_message_id:msg.message_id });
-      });
+      console.log(msg.text, category, classifier.getClassifications(msg.text));
+      check(msg.text, function(status) {
+        if (status === 1) {
+          categories.findOne({name: category}, function (err, docs) {
+              if (!slient) {
+                bot.sendMessage(msg.chat.id, `${random(docs.responses)}`, { disable_notification:true, reply_to_message_id:msg.message_id });
+              }
+              classifier.addDocument(msg.text, category); // Add document
+              classifier.retrain(); // Re train! :)
+          });
+        } else if (status === 0.5) {
+          if (!slient) {
+            bot.sendMessage(msg.chat.id, `I can't understand well, anybody can explain?`, { disable_notification:true, reply_to_message_id:msg.message_id });
+          }
+        }
+      })
+
     } catch (e) {
-      console.log(msg.text);
+      console.log('non classified',msg.text);
       nonclassified.insert({word: msg.text}, function(err, doc) {
         if (!err) console.log('Inserted', doc.word, 'with ID', doc._id)
       });
