@@ -4,6 +4,12 @@
 
 ## AI telegram chat bot.
 
+Lazy allows you create awesome chat bot with no longer know ai!
+Just teach lazy 4 your phase case!
+Let him answer you instead!
+
+You can try in telegram already: Lets chat with @LazyAIBot, my Turkish friends already teached somethings like as greetings.
+If you want host on your own, go ahead do this!
 [Create telegram bot.](https://core.telegram.org/bots#6-botfather)
 
 [![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/cagataycali/lazy)
