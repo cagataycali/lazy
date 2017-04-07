@@ -12,10 +12,11 @@ You can try in telegram already: Lets chat with @LazyAIBot, my Turkish friends a
 If you want host on your own, go ahead do this!
 [Create telegram bot.](https://core.telegram.org/bots#6-botfather)
 
-Telegram Bot Deploy:
+
+[Telegram Bot Deploy](https://github.com/cagataycali/lazy-telegram):
 [![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/cagataycali/lazy-telegram)
 
-Express HTTP Endpoint Deploy:
+[Express HTTP Endpoint Deploy](https://github.com/cagataycali/lazy-telegram):
 [![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/cagataycali/lazy-express)
 
 ## Programmatic Usage
