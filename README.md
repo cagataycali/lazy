@@ -10,8 +10,8 @@
 
 You can try in telegram already: Lets chat with @LazyAIBot, my Turkish friends already teached somethings like as greetings.
 If you want host on your own, go ahead do this!
-[Create telegram bot.](https://core.telegram.org/bots#6-botfather)
 
+[Create telegram bot](https://core.telegram.org/bots#6-botfather)
 
 [Telegram Bot Deploy](https://github.com/cagataycali/lazy-telegram):
 [![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/cagataycali/lazy-telegram)
@@ -19,7 +19,10 @@ If you want host on your own, go ahead do this!
 [Express HTTP Endpoint Deploy](https://github.com/cagataycali/lazy-telegram):
 [![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/cagataycali/lazy-express)
 
-## Programmatic Usage
+
+---
+
+### Node Usage
 
 ```bash
 # Or npm install --save lazy.ai
@@ -27,10 +30,11 @@ $> yarn add lazy.ai
 ```
 
 ```javascript
-var Lazy = require('lazy.ai');
+
+const Lazy = require('lazy.ai');
 
 async function start() {
-  var lazy = new Lazy();
+  const lazy = new Lazy();
   // Learn ..
   console.log(await lazy.learn({phrase: 'hello', category: 'greetings'}));
   console.log(await lazy.learn({phrase: 'hi', category: 'greetings'}));
@@ -44,7 +48,40 @@ async function start() {
 }
 // Dont forget start your function :)
 start();
+
 ```
+
+
+### Ruby Usage
+
+```bash
+# Or Gemfile --> gem 'lazy.ai', '~> 0.0.1'
+$> gem install lazy.ai
+```
+
+```ruby
+require 'lazy.ai'
+
+lazy = Lazy.new(host: "")
+
+puts lazy.learn(phrase: "hello", category: "greetings")
+
+puts lazy.add_response(response: "Hello there", category: "greetings")
+
+puts lazy.query(phrase: "hello dude!")
+
+puts lazy.get_responses(category: "greetings")
+
+puts lazy.get_categories()
+
+puts lazy.save()
+
+puts lazy.load()
+```
+
+
+
+---
 
 [![See in action](https://asciinema.org/a/9fnkllfe8pkddzddkem7iiq8t.png)](https://asciinema.org/a/9fnkllfe8pkddzddkem7iiq8t)
 
@@ -152,6 +189,11 @@ GET /responses/:category
 
 </details>
 
-## License
+<br>
+
+
+## License & Contributors
+
+[Special thanks for ruby client @Yengas](https://github.com/Yengas)
 
 MIT © [cagataycali](https://cagatay.me)
