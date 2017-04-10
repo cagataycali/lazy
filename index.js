@@ -75,7 +75,6 @@ class Lazy {
   }
 
   query(obj) {
-    console.log(obj);
     let {slient, classifier} = this;
     var categories = this.categories;
     let classified = classifier.getClassifications(obj.phrase);
