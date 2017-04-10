@@ -1,6 +1,6 @@
 {
   "name": "lazy.ai",
-  "version": "1.0.13",
+  "version": "1.1.0",
   "description": "Lazy, ai telegram bot.",
   "main": "index.js",
   "repository": "git@github.com:cagataycali/lazy.git",
