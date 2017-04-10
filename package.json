@@ -6,14 +6,6 @@
   "repository": "git@github.com:cagataycali/lazy.git",
   "author": "cagataycali <cagataycali@icloud.com>",
   "license": "MIT",
-  "keywords": [
-    "ai",
-    "chatbot",
-    "chatbot service",
-    "lazy"
-    "lazy.ai"
-    "lazy bot"
-  ],
   "dependencies": {
     "natural-brain": "^0.2.3",
     "nedb": "^1.8.0",
