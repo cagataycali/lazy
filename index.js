@@ -2,7 +2,7 @@ var BrainJSClassifier = require('natural-brain');
 var Datastore = require('nedb');
 var  _ = require('underscore')
 var categories = new Datastore({ filename: 'categories.db', autoload: true });
-
+const fs = require('fs');
 categories.ensureIndex({ fieldName: 'name', unique: true }, function (err) {
   if (err) console.log(err);
 });
@@ -104,22 +104,7 @@ class Lazy {
   }
 
   loadTrainedData() {
-    try {
-      var classifier = this.classifier;
-      BrainJSClassifier.load('./data.json', null,
-        function(err, newClassifier) {
-          classifier = newClassifier;
-          classifier.train();
-          if (err) {
-            console.log(err);
-          } else {
-            console.log('Done..');
-          }
-        });
-        this.classifier = classifier;
-    } catch (e) {
-      console.log('Error when loading.');
-    }
+    this.classifier = BrainJSClassifier.restore(JSON.parse(fs.readFileSync('./data.json', 'utf8')));
   }
 
   save() {
