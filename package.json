@@ -3,6 +3,9 @@
   "version": "1.1.1",
   "description": "Lazy, ai telegram bot.",
   "main": "index.js",
+  "repository": "git@github.com:cagataycali/lazy.git",
+  "author": "cagataycali <cagataycali@icloud.com>",
+  "license": "MIT",
   "keywords": [
     "ai",
     "chatbot",
@@ -11,21 +14,10 @@
     "lazy.ai"
     "lazy bot"
   ],
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/cagataycali/lazy.git"
-  },
-  "bugs": {
-    "url": "https://github.com/cagataycali/lazy/issues"
-  },
-  "repository": "git@github.com:cagataycali/lazy.git",
-  "author": "cagataycali <cagataycali@icloud.com>",
-  "license": "MIT",
   "dependencies": {
     "natural-brain": "^0.2.3",
     "nedb": "^1.8.0",
     "node-telegram-bot-api": "^0.27.0",
     "underscore": "^1.8.3"
-  },
-  "homepage": "https://github.com/cagataycali/lazy#readme"
+  }
 }
