@@ -95,7 +95,7 @@ lazy = lazyai.Lazy()
 
 lazy.learn("hello", "greetings")
 
-lazy.add_response("Hello there", "greetings")
+lazy.add_response("greetings", "Hello world!")
 
 lazy.query("hello dude!")
 
