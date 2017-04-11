@@ -468,14 +468,6 @@ natural@^0.4.0:
     sylvester ">= 0.0.12"
     underscore ">=1.3.1"
 
-natural@^0.5.0:
-  version "0.5.0"
-  resolved "https://registry.yarnpkg.com/natural/-/natural-0.5.0.tgz#55a9bb68eccf5ece5535486004a57de264ae3180"
-  dependencies:
-    apparatus ">= 0.0.9"
-    sylvester ">= 0.0.12"
-    underscore ">=1.3.1"
-
 nedb@^1.8.0:
   version "1.8.0"
   resolved "https://registry.yarnpkg.com/nedb/-/nedb-1.8.0.tgz#0e3502cd82c004d5355a43c9e55577bd7bd91d88"
@@ -596,7 +588,7 @@ request-promise@^4.1.1:
     request-promise-core "1.1.1"
     stealthy-require "^1.0.0"
 
-request@^2.69.0:
+request@^2.69.0, request@^2.81.0:
   version "2.81.0"
   resolved "https://registry.yarnpkg.com/request/-/request-2.81.0.tgz#c6928946a0e06c5f8d6f8a9333469ffda46298a0"
   dependencies:

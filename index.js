@@ -2,6 +2,7 @@ var BrainJSClassifier = require('natural-brain');
 var Datastore = require('nedb');
 var  _ = require('underscore')
 const fs = require('fs');
+const request = require('request');
 
 function random(items) {return items[Math.floor(Math.random()*items.length)]};
 
@@ -21,7 +22,7 @@ class Lazy {
     return new Promise(function(resolve, reject) {
       classifier.addDocument(obj.phrase, obj.category);
       classifier.retrain();
-      categories.insert({name:obj.category, responses: []}, function(err, doc) {
+      categories.insert({name:obj.category, responses: [], actions: []}, function(err, doc) {
         resolve(doc)
       });
     });
@@ -74,6 +75,19 @@ class Lazy {
     });
   }
 
+  addAction(obj) {
+    var categories = this.categories;
+    return new Promise(function(resolve, reject) {
+      categories.update({ name: obj.category }, { $push: { actions: obj.actions } }, {}, function (err) {
+        if (err) {
+          reject(err)
+        } else {
+          resolve(true);
+        }
+      });
+    });
+  }
+
   query(obj) {
     let {slient, classifier} = this;
     var categories = this.categories;
@@ -93,10 +107,26 @@ class Lazy {
 
     return new Promise(function(resolve, reject) {
       categories.findOne({name: category}, function (err, docs) {
-          if (!slient) {
-            var response = random(docs.responses);
-            resolve({status: true, possibility, response, details: classified})
+          console.log(docs.actions.length > 0 ? 'Actions:' : 'non actions');
+          var response = "";
+          if (docs.actions.length > 0) {
+            request.post(random(docs.actions), {form:{input:obj.phrase, category:category, details:classified, possibility}}, function(err, res, body) {
+              // console.log(err);
+              if (!err) {
+                response = body;
+                resolve({status: true, possibility, response, details: classified})
+              } else {
+                response = random(docs.responses);
+                resolve({status: true, possibility, response, details: classified})
+              }
+            })
+          } else {
+            if (!slient) {
+              response = random(docs.responses);
+              resolve({status: true, possibility, response, details: classified})
+            }
           }
+
           classifier.addDocument(obj.phrase, category); // Add document
           classifier.retrain(); // Re train! :)
       });

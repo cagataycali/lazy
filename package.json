@@ -10,6 +10,7 @@
     "natural-brain": "^0.2.3",
     "nedb": "^1.8.0",
     "node-telegram-bot-api": "^0.27.0",
+    "request": "^2.81.0",
     "underscore": "^1.8.3"
   }
 }

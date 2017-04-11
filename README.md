@@ -35,16 +35,24 @@ const Lazy = require('lazy.ai');
 
 async function start() {
   const lazy = new Lazy();
+
   // Learn ..
-  console.log(await lazy.learn({phrase: 'hello', category: 'greetings'}));
-  console.log(await lazy.learn({phrase: 'hi', category: 'greetings'}));
-  console.log(await lazy.learn({phrase: 'Hello there!', category: 'greetings'}));
-  // Result ..
-  console.log(await lazy.query({phrase: "hello dude!"}));
+  await lazy.learn({phrase: 'hello', category: 'greetings'})
+  await lazy.learn({phrase: 'hi', category: 'greetings'})
+  await lazy.learn({phrase: 'Hello there!', category: 'greetings'})
+
+  // Maybe add action ..
+  await lazy.addAction({category: 'greetings', actions: 'http://localhost:3000/'})
+  // Or add usual response ..
+  await lazy.addResponse({category: 'greetings', response: 'Hi there!'})
+
+  // Query ..
+  await lazy.query({phrase: "hello dude!"})
+
   // Helpers..
-  console.log(await lazy.addResponse({category: 'greetings', response: 'Hi there!'}));
-  console.log(await lazy.getResponses({category: 'greetings'}));
-  console.log(await lazy.getCategories());
+  await lazy.getResponses({category: 'greetings'})
+  await lazy.getCategories()
+
 }
 // Dont forget start your function :)
 start();
