@@ -223,7 +223,8 @@ GET /responses/:category
 
 ## License & Contributors
 
-<p>[Special thanks for ruby client @Yengas](https://github.com/Yengas)</p>
-<p>[Special thanks for python client @ahmetkotan](https://github.com/ahmetkotan)</p>
+[Special thanks for ruby client @Yengas](https://github.com/Yengas)
+<br>
+[Special thanks for python client @ahmetkotan](https://github.com/ahmetkotan)
 
 MIT © [cagataycali](https://cagatay.me)
