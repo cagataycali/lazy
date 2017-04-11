@@ -46,7 +46,7 @@ async function start() {
   // Or add usual response ..
   await lazy.addResponse({category: 'greetings', response: 'Hi there!'})
 
-  // Query ..
+  // Query.
   await lazy.query({phrase: "hello dude!"})
 
   // Helpers..
@@ -192,6 +192,12 @@ POST /forget
 
 ```
 POST /response
+```
+
+### Add action in category (category, actions)
+
+```
+POST /action
 ```
 
 ### Do query in trained data and response random response text.
