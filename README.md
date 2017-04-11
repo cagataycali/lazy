@@ -22,7 +22,7 @@ If you want host on your own, go ahead do this!
 
 ---
 
-### Node Usage
+### Node Usage
 
 ```bash
 # Or npm install --save lazy.ai
@@ -55,14 +55,15 @@ start();
 ### Ruby Usage
 
 ```bash
-# Or Gemfile --> gem 'lazy.ai', '~> 0.0.1'
+# Or Gemfile --> gem 'lazy.ai', '~> 0.0.1'
 $> gem install lazy.ai
 ```
 
 ```ruby
 require 'lazy.ai'
 
-lazy = Lazy.new(host: "")
+# Change with a valid lazy chatbot server url.
+lazy = Lazy.new(host: "lazy.herokuapp.com")
 
 puts lazy.learn(phrase: "hello", category: "greetings")
 
@@ -77,6 +78,34 @@ puts lazy.get_categories()
 puts lazy.save()
 
 puts lazy.load()
+```
+
+### Python Usage
+
+```bash
+# Or python setup.py install
+$> pip install lazy-ai
+```
+
+```python
+import lazyai
+
+# Change with a valid lazy chatbot server url.
+lazy = lazyai.Lazy()
+
+lazy.learn("hello", "greetings")
+
+lazy.add_response("Hello there", "greetings")
+
+lazy.query("hello dude!")
+
+lazy.get_responses("greetings")
+
+lazy.get_categories()
+
+lazy.save()
+
+lazy.load()
 ```
 
 
@@ -195,5 +224,6 @@ GET /responses/:category
 ## License & Contributors
 
 [Special thanks for ruby client @Yengas](https://github.com/Yengas)
+[Special thanks for python client @ahmetkotan](https://github.com/ahmetkotan)
 
 MIT © [cagataycali](https://cagatay.me)
