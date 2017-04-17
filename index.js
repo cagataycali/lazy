@@ -7,12 +7,14 @@ const request = require('request');
 function random(items) {return items[Math.floor(Math.random()*items.length)]};
 
 class Lazy {
-  constructor(db = 'data', selfTrain = true) {
+  constructor(obj) {
+    // obj => db = 'data', selfTrain = true, slient = false
+    typeof obj !== 'object' ? obj = { db: 'data', slient: false, selfTrain: true } : ''
+    this.db = obj.db || 'data';
+    this.slient = obj.slient || false;
+    this.selfTrain = obj.selfTrain || true;
     this.classifier = new BrainJSClassifier();
-    this.categories = new Datastore({ filename: `${db}.db`, autoload: true });
-    this.slient = false;
-    this.db = db;
-    this.selfTrain = selfTrain;
+    this.categories = new Datastore({ filename: `${this.db}.db`, autoload: true });
     this.categories.ensureIndex({ fieldName: 'name', unique: true }, function (err) {
       if (err) console.log(err);
     });
@@ -47,6 +49,14 @@ class Lazy {
     return new Promise((resolve, reject) => {
       this.categories.findOne({name: obj.category}, (err, docs) => {
         err ? reject(err) : resolve(docs.responses)
+      });
+    });
+  }
+
+  getActions(obj) {
+    return new Promise((resolve, reject) => {
+      this.categories.findOne({name: obj.category}, (err, docs) => {
+        err ? reject(err) : resolve(docs.actions)
       });
     });
   }
@@ -97,7 +107,7 @@ class Lazy {
               }
             })
           } else {
-            if (!slient) {
+            if (!this.slient) {
               response = random(docs.responses);
               resolve({status: true, possibility, response, details: classified})
             }
