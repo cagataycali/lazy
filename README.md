@@ -19,6 +19,8 @@ If you want host on your own, go ahead do this!
 [Express HTTP Endpoint Deploy](https://github.com/cagataycali/lazy-telegram):
 [![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/cagataycali/lazy-express)
 
+[Nodejs Example Usages](https://github.com/cagataycali/lazy-examples)
+
 
 ---
 
