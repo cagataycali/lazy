@@ -1,97 +1,75 @@
-var BrainJSClassifier = require('natural-brain');
-var Datastore = require('nedb');
-var  _ = require('underscore')
+const BrainJSClassifier = require('natural-brain');
+const Datastore = require('nedb');
+const  _ = require('underscore')
 const fs = require('fs');
 const request = require('request');
 
 function random(items) {return items[Math.floor(Math.random()*items.length)]};
 
 class Lazy {
-  constructor(db = 'data') {
+  constructor(db = 'data', selfTrain = true) {
     this.classifier = new BrainJSClassifier();
     this.categories = new Datastore({ filename: `${db}.db`, autoload: true });
     this.slient = false;
     this.db = db;
+    this.selfTrain = selfTrain;
     this.categories.ensureIndex({ fieldName: 'name', unique: true }, function (err) {
       if (err) console.log(err);
     });
   }
 
   learn(obj) {
-    let {classifier, categories} = this;
-    return new Promise(function(resolve, reject) {
-      classifier.addDocument(obj.phrase, obj.category);
-      classifier.retrain();
-      categories.insert({name:obj.category, responses: [], actions: []}, function(err, doc) {
+    return new Promise(resolve => {
+      this.classifier.addDocument(obj.phrase, obj.category);
+      this.classifier.retrain();
+      this.categories.insert({name:obj.category, responses: [], actions: []}, function(err, doc) {
         resolve(doc)
       });
     });
   }
 
   getCategories() {
-    var categories = this.categories;
-    return new Promise(function(resolve, reject) {
-      categories.find({}, function (err, docs) {
-          if (err) {
-            reject(err)
-          } else {
-            resolve(docs);
-          }
+    return new Promise((resolve, reject) => {
+      this.categories.find({}, (err, docs) => {
+        err ? reject(err) : resolve(docs);
       });
     });
   }
 
   quiet() {
-    let {slient} = this;
-    return new Promise(function(resolve, reject) {
-      slient = !slient;
+    return new Promise(resolve => {
+      this.slient = !this.slient;
       resolve(slient);
     });
   }
 
   getResponses(obj) {
-    var categories = this.categories;
-    return new Promise(function(resolve, reject) {
-      categories.findOne({name: obj.category}, function (err, docs) {
-        if (err) {
-          reject(err);
-        } else {
-          resolve(docs.responses)
-        }
+    return new Promise((resolve, reject) => {
+      this.categories.findOne({name: obj.category}, (err, docs) => {
+        err ? reject(err) : resolve(docs.responses)
       });
     });
   }
 
   addResponse(obj) {
-    var categories = this.categories;
-    return new Promise(function(resolve, reject) {
-      categories.update({ name: obj.category }, { $push: { responses: obj.response } }, {}, function (err) {
-        if (err) {
-          reject(err)
-        } else {
-          resolve(true);
-        }
+    return new Promise((resolve, reject) => {
+      this.categories.update({ name: obj.category }, { $push: { responses: obj.response } }, {}, (err) => {
+        err ? reject(err) : resolve(true)
       });
     });
   }
 
   addAction(obj) {
-    var categories = this.categories;
-    return new Promise(function(resolve, reject) {
-      categories.update({ name: obj.category }, { $push: { actions: obj.actions } }, {}, function (err) {
-        if (err) {
-          reject(err)
-        } else {
-          resolve(true);
-        }
+    return new Promise((resolve, reject) => {
+      this.categories.update({ name: obj.category }, { $push: { actions: obj.actions } }, {}, (err) => {
+        err ? reject(err) : resolve(true)
       });
     });
   }
 
   query(obj) {
-    let {slient, classifier} = this;
     var categories = this.categories;
-    let classified = classifier.getClassifications(obj.phrase);
+    let classified = this.classifier.getClassifications(obj.phrase);
     classified = _.sortBy(classified, 'value')
     classified.reverse();
     let possibility = 0;
@@ -103,15 +81,13 @@ class Lazy {
     } else {
       possibility = 0;
     }
-    const category = classifier.classify(obj.phrase)
+    const category = this.classifier.classify(obj.phrase)
 
-    return new Promise(function(resolve, reject) {
-      categories.findOne({name: category}, function (err, docs) {
-          console.log(docs.actions.length > 0 ? 'Actions:' : 'non actions');
+    return new Promise((resolve, reject) => {
+      this.categories.findOne({name: category}, (err, docs) => {
           var response = "";
           if (docs.actions.length > 0) {
-            request.post(random(docs.actions), {form:{input:obj.phrase, category:category, details:classified, possibility}}, function(err, res, body) {
-              // console.log(err);
+            request.post(random(docs.actions), {form:{input:obj.phrase, category:category, details:classified, possibility}}, (err, res, body) => {
               if (!err) {
                 response = body;
                 resolve({status: true, possibility, response, details: classified})
@@ -126,15 +102,16 @@ class Lazy {
               resolve({status: true, possibility, response, details: classified})
             }
           }
-
-          classifier.addDocument(obj.phrase, category); // Add document
-          classifier.retrain(); // Re train! :)
+          if (this.selfTrain) {
+            this.classifier.addDocument(obj.phrase, category); // Add document
+            this.classifier.retrain(); // Re train! :)
+          }
       });
     });
   }
 
   loadTrainedData() {
-    var db = this.db;
+    const db = this.db;
     this.classifier = BrainJSClassifier.restore(JSON.parse(fs.readFileSync(`./${db}.json`, 'utf8')));
   }
 
@@ -144,16 +121,11 @@ class Lazy {
   }
 
   removeDocument(obj) {
-    var classifier = this.classifier;
-    return new Promise(function(resolve, reject) {
-      classifier.removeDocument(obj.phrase, obj.category);
-      classifier.retrain();
-      classifier.remove({ name:obj.category }, {}, function (err, numRemoved) {
-        if (err) {
-          reject(err)
-        } else {
-          resolve(true);
-        }
+    return new Promise((resolve, reject) => {
+      this.classifier.removeDocument(obj.phrase, obj.category);
+      this.classifier.retrain();
+      this.classifier.remove({ name:obj.category }, {}, function (err, numRemoved) {
+        err ? reject(err) : resolve(true)
       });
     });
   }
