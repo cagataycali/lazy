@@ -1,9 +1,9 @@
 {
   "name": "lazy.ai",
-  "version": "2.1.0",
+  "version": "2.1.1",
   "description": "Lazy, ai chatbot as a service.",
   "main": "index.js",
-  "license": "MIT",
+  "license": "ISC",
   "dependencies": {
     "natural-brain": "^0.2.3",
     "nedb": "^1.8.0",
@@ -29,7 +29,6 @@
     "processing"
   ],
   "author": "Çağatay Çalı",
-  "license": "ISC",
   "bugs": {
     "url": "https://github.com/cagataycali/lazy/issues"
   },
