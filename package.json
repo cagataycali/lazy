@@ -1,6 +1,6 @@
 {
   "name": "lazy.ai",
-  "version": "2.2.0",
+  "version": "2.2.1",
   "description": "Lazy, ai chatbot as a service.",
   "main": "index.js",
   "license": "ISC",
