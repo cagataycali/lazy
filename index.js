@@ -96,7 +96,7 @@ class Lazy {
     return new Promise((resolve, reject) => {
       this.categories.findOne({name: category}, (err, docs) => {
           var response = "";
-          if (docs.actions.length > 0) {
+          if (docs.actions && docs.actions.length > 0) {
             request.post(random(docs.actions), {form:{input:obj.phrase, category:category, details:classified, possibility}}, (err, res, body) => {
               if (!err) {
                 response = body;
