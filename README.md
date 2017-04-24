@@ -21,6 +21,8 @@ If you want host on your own, go ahead do this!
 
 [Nodejs Example Usages](https://github.com/cagataycali/lazy-examples)
 
+Chat with lazy online in Turkish [lazy](https://lazy.cagatay.me) 
+
 
 ---
 
