@@ -9,7 +9,8 @@
     "nedb": "^1.8.0",
     "node-telegram-bot-api": "^0.27.0",
     "request": "^2.81.0",
-    "underscore": "^1.8.3"
+    "underscore": "^1.8.3",
+    "snyk": "^1.42.3"
   },
   "repository": {
     "type": "git",
@@ -32,5 +33,10 @@
   "bugs": {
     "url": "https://github.com/cagataycali/lazy/issues"
   },
-  "homepage": "https://github.com/cagataycali/lazy#readme"
+  "homepage": "https://github.com/cagataycali/lazy#readme",
+  "scripts": {
+    "snyk-protect": "snyk protect",
+    "prepublish": "npm run snyk-protect"
+  },
+  "snyk": true
 }
