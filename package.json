@@ -8,9 +8,10 @@
     "natural-brain": "^0.2.3",
     "nedb": "^1.8.0",
     "node-telegram-bot-api": "^0.27.0",
+    "opencollective": "^1.0.3",
     "request": "^2.81.0",
-    "underscore": "^1.8.3",
-    "snyk": "^1.42.3"
+    "snyk": "^1.42.3",
+    "underscore": "^1.8.3"
   },
   "repository": {
     "type": "git",
@@ -36,7 +37,13 @@
   "homepage": "https://github.com/cagataycali/lazy#readme",
   "scripts": {
     "snyk-protect": "snyk protect",
-    "prepublish": "npm run snyk-protect"
+    "prepublish": "npm run snyk-protect",
+    "postinstall": "opencollective postinstall"
   },
-  "snyk": true
+  "snyk": true,
+  "collective": {
+    "type": "opencollective",
+    "url": "https://opencollective.com/lazy-bot",
+    "logo": "https://opencollective.com/opencollective/logo.txt"
+  }
 }
