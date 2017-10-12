@@ -4,6 +4,8 @@
 
 ## AI chat bot service.
 
+[![Backers on Open Collective](https://opencollective.com/lazy-bot/backers/badge.svg)](#backers) [![Sponsors on Open Collective](https://opencollective.com/lazy-bot/sponsors/badge.svg)](#sponsors)
+
 <p>Lazy allows you create awesome chat bot with no longer know ai!</p>
 <p>Just teach lazy 4 your phase case!</p>
 <p>Let him answer you instead!</p>
@@ -237,6 +239,36 @@ GET /responses/:category
 </details>
 
 <br>
+
+
+## Contributors
+
+This project exists thanks to all the people who contribute. [[Contribute]](CONTRIBUTING.md).
+<a href="graphs/contributors"><img src="https://opencollective.com/lazy-bot/contributors.svg?width=890" /></a>
+
+
+## Backers
+
+Thank you to all our backers! 🙏 [[Become a backer](https://opencollective.com/lazy-bot#backer)]
+
+<a href="https://opencollective.com/lazy-bot#backers" target="_blank"><img src="https://opencollective.com/lazy-bot/backers.svg?width=890"></a>
+
+
+## Sponsors
+
+Support this project by becoming a sponsor. Your logo will show up here with a link to your website. [[Become a sponsor](https://opencollective.com/lazy-bot#sponsor)]
+
+<a href="https://opencollective.com/lazy-bot/sponsor/0/website" target="_blank"><img src="https://opencollective.com/lazy-bot/sponsor/0/avatar.svg"></a>
+<a href="https://opencollective.com/lazy-bot/sponsor/1/website" target="_blank"><img src="https://opencollective.com/lazy-bot/sponsor/1/avatar.svg"></a>
+<a href="https://opencollective.com/lazy-bot/sponsor/2/website" target="_blank"><img src="https://opencollective.com/lazy-bot/sponsor/2/avatar.svg"></a>
+<a href="https://opencollective.com/lazy-bot/sponsor/3/website" target="_blank"><img src="https://opencollective.com/lazy-bot/sponsor/3/avatar.svg"></a>
+<a href="https://opencollective.com/lazy-bot/sponsor/4/website" target="_blank"><img src="https://opencollective.com/lazy-bot/sponsor/4/avatar.svg"></a>
+<a href="https://opencollective.com/lazy-bot/sponsor/5/website" target="_blank"><img src="https://opencollective.com/lazy-bot/sponsor/5/avatar.svg"></a>
+<a href="https://opencollective.com/lazy-bot/sponsor/6/website" target="_blank"><img src="https://opencollective.com/lazy-bot/sponsor/6/avatar.svg"></a>
+<a href="https://opencollective.com/lazy-bot/sponsor/7/website" target="_blank"><img src="https://opencollective.com/lazy-bot/sponsor/7/avatar.svg"></a>
+<a href="https://opencollective.com/lazy-bot/sponsor/8/website" target="_blank"><img src="https://opencollective.com/lazy-bot/sponsor/8/avatar.svg"></a>
+<a href="https://opencollective.com/lazy-bot/sponsor/9/website" target="_blank"><img src="https://opencollective.com/lazy-bot/sponsor/9/avatar.svg"></a>
+
 
 
 ## License & Contributors
