@@ -9,7 +9,7 @@
     "nedb": "^1.8.0",
     "node-telegram-bot-api": "^0.27.0",
     "opencollective": "^1.0.3",
-    "request": "^2.81.0",
+    "request": "^2.84.0",
     "snyk": "^1.42.3",
     "underscore": "^1.8.3"
   },
