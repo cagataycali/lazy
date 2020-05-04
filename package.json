@@ -10,7 +10,7 @@
     "node-telegram-bot-api": "^0.27.0",
     "opencollective": "^1.0.3",
     "request": "^2.84.0",
-    "snyk": "^1.42.3",
+    "snyk": "^1.317.0",
     "underscore": "^1.8.3"
   },
   "repository": {
@@ -37,7 +37,7 @@
   "homepage": "https://github.com/cagataycali/lazy#readme",
   "scripts": {
     "snyk-protect": "snyk protect",
-    "prepublish": "npm run snyk-protect",
+    "prepublish": "yarn run snyk-protect",
     "postinstall": "opencollective postinstall"
   },
   "snyk": true,
