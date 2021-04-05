@@ -11,7 +11,7 @@
     "opencollective": "^1.0.3",
     "request": "^2.84.0",
     "snyk": "^1.42.3",
-    "underscore": "^1.8.3"
+    "underscore": "^1.12.1"
   },
   "repository": {
     "type": "git",
